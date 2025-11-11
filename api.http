@@ -27,7 +27,7 @@ Content-Type: application/json
   "user_id": "673f1234567890abcdef5678",
   "venue_id": "6912cbf7d533d34afc993ae7",
   "date": "2025-11-15",
-  "start_time": "10:00",
+  "start_time": "11:00",
   "duration": 2
 }
 
@@ -35,7 +35,6 @@ Content-Type: application/json
 GET http://localhost:3000/api/users/673f1234567890abcdef5678/bookings
 
 ### Cancel Booking
-DELETE http://localhost:3000/api/bookings/6912cbf7d533d34afc993ae7
+### (ganti dengan ID yang didapat dari Get User Bookings)
 
-### Get Popular Venues
-GET http://localhost:3000/api/venues/popular
+DELETE http://localhost:3000/api/bookings/6912cc25d533d34afc993ae8

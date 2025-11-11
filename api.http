@@ -1,0 +1,41 @@
+### Health Check
+GET http://localhost:3000/health
+
+### Create Venue
+POST http://localhost:3000/api/venues
+Content-Type: application/json
+
+{
+  "name": "Meeting Room A",
+  "description": "Ruang meeting modern dengan proyektor",
+  "capacity": 10,
+  "price_per_hour": 100000,
+  "amenities": ["Proyektor", "Whiteboard", "AC"]
+}
+
+### Get Venue (ganti dengan ID yang didapat dari create)
+GET http://localhost:3000/api/venues/6912cbf7d533d34afc993ae7
+
+### Check Availability
+GET http://localhost:3000/api/venues/6912cbf7d533d34afc993ae7/availability/2025-11-15
+
+### Create Booking
+POST http://localhost:3000/api/bookings
+Content-Type: application/json
+
+{
+  "user_id": "673f1234567890abcdef5678",
+  "venue_id": "6912cbf7d533d34afc993ae7",
+  "date": "2025-11-15",
+  "start_time": "10:00",
+  "duration": 2
+}
+
+### Get User Bookings
+GET http://localhost:3000/api/users/673f1234567890abcdef5678/bookings
+
+### Cancel Booking
+DELETE http://localhost:3000/api/bookings/6912cbf7d533d34afc993ae7
+
+### Get Popular Venues
+GET http://localhost:3000/api/venues/popular

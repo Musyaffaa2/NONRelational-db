@@ -1,0 +1,21 @@
+{
+  "name": "booking-redis",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "cache:get": "node cache_schedule.js get",
+    "cache:invalidate": "node cache_schedule.js invalidate",
+    "lock:lock": "node lock_slot.js lock",
+    "lock:confirm": "node lock_slot.js confirm",
+    "q:worker": "node queue_booking.js worker",
+    "q:produce": "node queue_booking.js produce"
+  },
+  "dependencies": {
+    "redis": "^4.7.1"
+  },
+  "main": "cache_schedule.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

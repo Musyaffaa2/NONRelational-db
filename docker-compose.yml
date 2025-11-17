@@ -1,0 +1,26 @@
+services:
+  redis:
+    image: redis:7
+    container_name: redis
+    command: >
+      sh -lc 'exec redis-server /usr/local/etc/redis/redis.conf
+      --requirepass "doom2019"'
+    ports:
+      - "127.0.0.1:6379:6379"     # bind to localhost (safer on dev)
+    volumes:
+      - ./data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a 'doom2019' ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "127.0.0.1:5540:5540"     # http://localhost:5540
+    restart: unless-stopped

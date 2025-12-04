@@ -1,8 +1,11 @@
-### Health Check
-GET http://localhost:3000/health
+@host = http://localhost:3000
+@date = 2025-11-15
 
-### Create Venue
-POST http://localhost:3000/api/venues
+### 1) Health
+GET {{host}}/health
+
+### 2) Create Venue (copy _id from response)
+POST {{host}}/api/venues
 Content-Type: application/json
 
 {
@@ -13,28 +16,39 @@ Content-Type: application/json
   "amenities": ["Proyektor", "Whiteboard", "AC"]
 }
 
-### Get Venue (ganti dengan ID yang didapat dari create)
-GET http://localhost:3000/api/venues/6912cbf7d533d34afc993ae7
+### 2a) SET THIS to the _id you just got
+@venueId = 692ec773a6ae8240e199ab5d
 
-### Check Availability
-GET http://localhost:3000/api/venues/6912cbf7d533d34afc993ae7/availability/2025-11-15
+### 3) Get Venue
+GET {{host}}/api/venues/{{venueId}}
 
-### Create Booking
-POST http://localhost:3000/api/bookings
+### 4) Check Availability
+GET {{host}}/api/venues/{{venueId}}/availability/{{date}}
+
+### 5) Create Booking (use a listed slot; change user_id to a 24-hex string you control)
+# If you don't have users yet, generate one with:
+# node -e "console.log(require('crypto').randomBytes(12).toString('hex'))"
+@userId = 673f1234567890abcdef5678
+
+POST {{host}}/api/bookings
 Content-Type: application/json
 
 {
-  "user_id": "673f1234567890abcdef5678",
-  "venue_id": "6912cbf7d533d34afc993ae7",
-  "date": "2025-11-15",
-  "start_time": "11:00",
-  "duration": 2
+  "user_id": "{{userId}}",
+  "venue_id": "{{venueId}}",
+  "date": "{{date}}",
+  "start_time": "09:30",
+  "duration": 1
 }
 
-### Get User Bookings
-GET http://localhost:3000/api/users/673f1234567890abcdef5678/bookings
+### 5a) SET THIS to the bookingId returned above
+@bookingId = 692ec793a6ae8240e199ab5e
 
-### Cancel Booking
-### (ganti dengan ID yang didapat dari Get User Bookings)
+### 6) Get User Bookings
+GET {{host}}/api/users/{{userId}}/bookings
 
-DELETE http://localhost:3000/api/bookings/6912cc25d533d34afc993ae8
+### 7) Cancel Booking
+DELETE {{host}}/api/bookings/{{bookingId}}
+
+### 8) Check Availability again
+GET {{host}}/api/venues/{{venueId}}/availability/{{date}}

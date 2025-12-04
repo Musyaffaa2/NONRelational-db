@@ -2,17 +2,13 @@ services:
   redis:
     image: redis:7
     container_name: redis
-    command: >
-      sh -lc 'exec redis-server /usr/local/etc/redis/redis.conf
-      --requirepass "doom2019"'
     ports:
       - "127.0.0.1:6379:6379"     
     volumes:
       - ./data:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli -a 'doom2019' ping"]
+      test: ["CMD-SHELL", "redis-cli ping"]
       interval: 10s
       timeout: 3s
       retries: 5
@@ -23,4 +19,15 @@ services:
     container_name: redisinsight
     ports:
       - "127.0.0.1:5540:5540"     
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    ports:
+      - "127.0.0.1:27017:27017"
+    env_file: [.env]
+    volumes:
+      - ./mongo-data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped

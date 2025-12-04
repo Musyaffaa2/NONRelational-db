@@ -15,7 +15,7 @@ async function testConnections() {
   
   // Test Redis
   try {
-    const redis = new Redis('redis://localhost:6380');
+    const redis = new Redis('redis://localhost:6379');
     await redis.ping();
     console.log('✅ Redis connected successfully!');
     await redis.quit();
